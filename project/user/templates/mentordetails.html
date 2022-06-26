@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+<style>
+  body {
+    font-family:monospace ;
+  }
+  </style>
+  <link href="https://fonts.cdnfonts.com/css/bukhari-script" rel="stylesheet">
+<nav class="navbar navbar-expand-lg navbar-light " style="background: #90CAF9;" >
+  <a class="navbar-brand text-white ms-3 fs-3 "  style="font-family:Bukhari Script" href="{% url 'userhome' %}">HireYourMentor.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item ">
+        <a class="nav-link " href="{% url 'userdash' %}">{{ user.first_name}} {{user.last_name  }}</a>
+      </li> 
+      <li class="nav-item ">
+        <a class="nav-link " href="{% url 'userlogout' %}">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-3  "  >
+        <div  class=" border mt-3 mb-3 border-secondary"  style="border-radius: 1rem;">
+      {%  for x in cat %}
+      <h6 class="footer-heading m-2 text-secondary">{{x.category_name}}</h6>
+      {%  for y in dom %}
+      {% if y.Category_id == x.id %}
+      <a class=" text-dark  " style="text-decoration: none" href="{% url "mentorloader" y.id %}"><h6 class="footer-heading m-2 ms-5">{{y.Domain_name}}</h6></a>
+      {% endif %}  
+      {% endfor %}
+      {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-8 ms-3  border  text-dark mt-3 mb-3" style="border-radius: 1rem;" >
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6  text-dark mt-3 mb-3" >
+                    <img class="img-fluid  border  bg-primary mt-3"  src="{{mentor.mentor_image.url}}"  alt="mentor image" border="0">
+                </div>
+                <div class="col-md-6   border  text-dark mt-3 mb-3" style="border-radius: 1rem;" >
+                    <h4 class="mt-3 text-secondary ">{{ mentoruser.first_name}} {{mentoruser.last_name}}</h4>
+                    <h6 >{{mentor.Dom.Domain_name}}</h6>
+                    <p class="text-secondary" >{{mentor.mentor_desc}}  
+                        </p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12  text-dark mt-3 mb-3" >
+                    <h5>Instructions</h5>
+                    <p class="text-secondary">select the mentor you want to book by selecting the date and time slot you need ,after completing your payment 
+                      your slot booking request will be sent to the mentor and your booking will be confirmed only after the mentor accepted your request<sup>*</sup></P>
+                </div>
+            </div>
+          </div> 
+          <div class="container">
+            <div class="row justify-content-center">
+              <form method="post" action="{% url 'booking' user.id %}">
+                {% csrf_token %}
+                <div class="col-md-12  text-dark mt-3 mb-3" >
+                  <div class="row justify-content-between">
+                  <div class="col-md-3">
+                    <input type="text" class="form-control form-control-sm border text-dark bg-light "  placeholder="select date" name="date"  id="date"  required />
+                    </div>
+                      <div class="col-md-3">
+                  <select class="form-control form-control-sm border text-secondary bg-light " name="slots" id="type" required>
+                    <option hidden value="">select slot</option>
+                    {% for x in slots %}
+                    <option value="{{x.id}}">{{x.booked_slot}}</option>
+                    {% endfor %}
+                </select>
+                        </div>
+                        <div class="col-md-3">
+                        <input disabled type="text" class="form-control form-control-sm border text-dark bg-light "   placeholder="{{price}}"  />
+                        </div>
+                          <div class="col-md-3">
+                            <button type=submit class="form-control form-control-sm border text-dark btn-secondary " >Add Now</button>
+                          </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+          </div> 
+    </div>
+  </div>
+</div> 
+<footer class="footer bg-dark text-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center font-monospace">
+        <h2 class="footer-heading mt-3">Hireyourmentor.com</h2>
+        <p class="menu mt-3">
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userhome' %}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userlogin' %}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'usersignup' %}">Sign up</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'mentorlogin' %}">Mentor </a>
+        </p>
+      </div>
+    </div>
+    <div class="row mt-3  ">
+      <div class="col-md-12 text-center mb-2">
+        <h6 class="fw-light text-secondary">Copyright ©2022 All rights reserved  by hireyourmentor.com
+        </h6>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  flatpickr("#date", {
+    minDate: "today"
+  });
+</script>
+{% endblock %}

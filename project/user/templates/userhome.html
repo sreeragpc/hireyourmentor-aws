@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  body {
+    font-family:monospace ;
+  }
+  </style>
+  <link href="https://fonts.cdnfonts.com/css/bukhari-script" rel="stylesheet">
+<nav class="navbar navbar-expand-lg navbar-light " style="background: #90CAF9;" >
+  <a class="navbar-brand text-white ms-3 fs-3"  style="font-family:Bukhari Script" href="{% url 'userhome' %}">HireYourMentor.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto ">
+      <li class="nav-item ">
+        <a class="nav-link  " href="{% url 'userdash' %}">{{ user.first_name}} {{user.last_name  }}</a>
+      </li> 
+      <li class="nav-item ">
+        <a class="nav-link  " href="{% url 'userlogout' %}">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-3  border mt-3 mb-3 border-secondary  "  style="border-radius: 1rem;">
+      {%  for x in cat %}
+      <h6 class="footer-heading m-2 fw-bold text-secondary ">{{x.category_name}}</h6>
+      {%  for y in dom %}
+      {% if y.Category_id == x.id %}
+      <a  class=" text-dark   " style="text-decoration: none" href="{% url "mentorloader" y.id %}"><h6 class="footer-heading m-2 ms-5">{{y.Domain_name}}</h6></a>
+      {% endif %}  
+      {% endfor %}
+      {% endfor %}
+    </div>
+    <div class="col-md-9  text-dark mt-3 mb-3 " >
+      <img class="img-fluid" src="{% static 'images/Rectangle12.png' %}"  alt="home" border="0">
+      <div class="carousel-caption">
+      </div>
+    </div>
+  </div>
+</div> 
+{% if mentor != None %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12  border mt-3 mb-3"  style="border-radius: 1rem;">
+      <div class="row">  
+{% for z in mentor %}   
+ {% if z.is_verified  and z.is_available%}
+<div class="card col-md-3 border mt-3 mb-3 text-center h-100 "  style="border-radius: 1rem;">
+  <a href="{% url "mentordetails" z.id %}">
+  <div class="bg-image ms-1 mt-1 " >
+    <img class="img-fluid" src="{{ z.mentor_image.url }}"  alt="home" border="0">
+    <a >
+      <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+    </a>
+  </div>
+  <div class="card-body">
+    <h6 class="card-title text-secondary">{{z.mentoruser.first_name}} {{z.mentoruser.last_name}} </h6>
+    <h6 class="card-text">{{z.Dom.Domain_name}}</h6>
+    <h6 class="card-text"> RS {{z.mentor_price}} </h6>
+</a>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+</div> 
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12  border mt-3 mb-3  border-secondary"  style="border-radius: 1rem;">
+      <div class="row justify-content-around">
+        <div class="col-md-3  mt-3 mb-3 justify-content-center" >
+          <div class="card text-center  " style="width: 18rem;">
+            <img class="card-img-top" src="{% static 'images/3.png' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title text-secondary">Verified Mentors</h5>
+              <p class="card-text">You can select verified mentors by selecting the domains from the category</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3   mt-3 mb-3 justify-content-center " >
+          <div class="card text-center" style="width: 18rem;">
+            <img class="card-img-top" src="{% static 'images/2.png' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title text-secondary">Find your path</h5>
+              <p class="card-text">Plan your career and clear your doubts from experienced mentors</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3   mt-3 mb-3 justify-content-center"  >
+          <div class="card text-center" style="width: 18rem;">
+            <img class="card-img-top" src="{% static 'images/1.png' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title text-secondary">Book your slots</h5>
+              <p class="card-text">You can connect with mentors by booking your slot with date</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer bg-dark text-white ">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center font-monospace">
+        <h2 class="footer-heading mt-3">Hireyourmentor.com</h2>
+        <p class="menu mt-3">
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userhome' %}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userlogin' %}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'usersignup' %}">Sign up</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'mentorlogin' %}">Mentor </a>
+        </p>
+      </div>
+    </div>
+    <div class="row mt-3  ">
+      <div class="col-md-12 text-center mb-2">
+        <h6 class="fw-light text-secondary">Copyright ©2022 All rights reserved  by hireyourmentor.com
+        </h6>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}

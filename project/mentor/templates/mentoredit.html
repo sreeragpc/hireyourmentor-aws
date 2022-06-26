@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+<style>
+  body {
+    font-family:monospace ;
+  }
+  </style>
+  <link href="https://fonts.cdnfonts.com/css/bukhari-script" rel="stylesheet">
+<nav class="navbar navbar-expand-lg navbar-light " style="background: #90CAF9;" >
+  <a class="navbar-brand text-white ms-3 fs-3 "  style="font-family:Bukhari Script" href="#">HireYourMentor.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item ">
+        <a class="nav-link " href="{% url 'mentorlogout' %}">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-11  border mt-3 mb-3"  style="border-radius: 1rem;">
+      <h6 class=" text-center mt-2 " >Mentor Dashboard</h6> 
+
+    </div>
+  </div>
+</div>      
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-3   "  >
+      <div class=" border mt-3 mb-3"    style="border-radius: 1rem;">
+        <a class="text-secondary text-decoration-none" href={% url 'mentordash' %} ><h6 class="border text-center m-3 mt-4 "  style="border-radius: 1rem;" >Profile</h6></a>
+        <a class="text-dark text-decoration-none" href={% url 'mentoredit'   %} ><h6 class="border text-center m-3  "  style="border-radius: 1rem;" >Edit details </h6></a>
+        <a class="text-secondary text-decoration-none" href={% url 'mentorbooking' %} ><h6 class="border text-center m-3 "  style="border-radius: 1rem;" >Bookings</h6></a>      
+          <a class="text-secondary text-decoration-none" href={% url 'mentorpassword' %} ><h6 class="border text-center m-3 mb-4 "  style="border-radius: 1rem;" >Change Password </h6></a>
+      </div>
+    </div>
+    <div class="col-md-8  border text-dark ms-2 mt-3 mb-3" style="border-radius: 1rem;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12 mt-1   "  >
+            <form class="validate-form" method = 'POST' ="{% url 'usersignup' %}" enctype="multipart/form-data" >
+              {% csrf_token %}
+            <div class="form-outline m-2">
+              <input  type="text" name="first_name" class="form-control form-control-sm" value="{{user.first_name}}" required />              
+            </div>
+            <div class="form-outline m-2">
+              <input  type="text" name="last_name" class="form-control form-control-sm" value="{{user.last_name}}" required />              
+            </div>      
+            <div class="form-outline m-2">
+              <input  type="email" name="email" class="form-control form-control-sm" value="{{user.email}}" required />              
+            </div> 
+            <div class="form-outline m-2">
+              <input  type="text" name="city" class="form-control form-control-sm" value="{{user.city}}" required />              
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-3  "  >
+            <div class="form-outline m-2">
+              <input class="form-control form-control-sm"  type="file" id="img" name="img" accept="image/*">
+            </div>            
+          </div>
+          <div class="col-md-3 "  >
+            <div class="form-outline m-2">
+              <select class="form-control form-control-sm" name="domain"  >
+                <option  value=disabled ><-select domain-></option>
+                {% for x in cat %}
+                  <optgroup label="{{ x.category_name }}">
+                    {% for y in dom %}
+                    {% if y.Category_id == x.id %}
+                    <option value="{{ y.id }}">{{ y.Domain_name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </optgroup>
+                  {% endfor %}
+                </select>
+            </div>  
+          </div>
+          <div class="col-md-3  "  >
+            <div class="form-outline m-2">
+              <select class="form-control form-control-sm" name="qual"  >
+                <option value=disabled  ><-select qual-></option>
+                {% for z in qual %}
+                <option  value="{{z.id}}">{{z.Qualification_name}}</option>
+                {% endfor %}   
+            </select> 
+            </select> 
+            </div>
+          </div>
+          <div class="col-md-3"  >
+            <div class="form-outline m-2">
+              <input  type="text" name="price" class="form-control form-control-sm" placeholder=" add new price" value={{mentor.mentor_price}} required /> 
+            </div>
+          </div>  
+        </div>
+      </div> 
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12  "  >
+            <div class="form-outline m-2">
+              <input  type="text" name="desc" class="form-control form-control-sm" maxlength="240" placeholder="add new description" value={{mentor.mentor_desc}} required />
+            </div>
+          </div>
+        </div>
+      </div> 
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12  "  >
+            <button type="submit" class="btn btn-white  btn-sm border btn-secondary btn-block m-2 float-end ">Submit</button>
+        </form> 
+        {% for x in messages %}
+        <p style="color:red">{{x}}</p>
+        {% endfor %}  
+          </div> 
+        </div>
+      </div> 
+    </div>
+  </div>
+</div> 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<footer class="footer bg-dark text-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center font-monospace">
+        <h2 class="footer-heading mt-3">Hireyourmentor.com</h2>
+        <p class="menu mt-3">
+          <a class=" text-white" style="text-decoration: none" href="{% url 'mentordash' %}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'mentorlogin' %}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'mentorsignup' %}">Sign up</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userlogin' %}">Student </a>
+        </p>
+      </div>
+    </div>
+    <div class="row mt-3  ">
+      <div class="col-md-12 text-center mb-2">
+        <h6 class="fw-light text-secondary">Copyright ©2022 All rights reserved  by hireyourmentor.com
+        </h6>
+      </div>
+    </div>
+  </div>
+</footer>
+{% for y in dom %}
+<script>
+  $(document).ready(function () {
+    $("#category").change(function () {
+        var val = $(this).val();
+        if (val == "0") {
+          $("#Domain").html("<option value=''>--select one--</option>");    
+        } else if (val == "1") {
+            $("#Domain").html("<option >y.Domain_name </option>");
+        } 
+    });
+});
+</script>
+{% endfor %}
+{% endblock %}

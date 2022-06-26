@@ -1,0 +1,194 @@
+{% extends 'base.html' %} {% load static %} {% block content%}
+<style>
+  body {
+    font-family: monospace;
+  }
+</style>
+<link href="https://fonts.cdnfonts.com/css/bukhari-script" rel="stylesheet">
+<nav class="navbar navbar-expand-lg navbar-light" style="background: #90caf9">
+  <a
+    class="navbar-brand text-white ms-3 fs-3"
+    style="font-family: Bukhari Script"
+    href="{% url 'userhome' %}"
+    >HireYourMentor.com</a
+  >
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item ">
+        <a class="nav-link  " href="{% url 'userdash' %}">{{ user.first_name}} {{user.last_name  }}</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'userlogout' %}">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-11 border mt-3 mb-3" style="border-radius: 1rem">
+      <h6 class="text-center mt-2">Your selections</h6>
+    </div>
+  </div>
+</div>
+<div class="text-center">
+  {% for x in messages %}
+  <p style="color: red">{{x}}</p>
+  {% endfor %}
+</div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div
+      class="col-md-8 border text-dark ms-2 mt-3 mb-3"
+      style="border-radius: 1rem"
+    >
+      <div class="container">
+        <div class="row justify-content-center">
+          <table class="table table-sm table-hover table-light mt-4 mb-3">
+            <thead class="text-muted fs-6 text-center">
+              <tr>
+                <th class="fw-light">Subject</th>
+                <th class="fw-light">Mentor</th>
+                <th class="fw-light">Date</th>
+                <th class="fw-light">Price</th>
+                <th class="fw-light">Timings</th>
+                <th class="fw-light">Remove</th>
+              </tr>
+            </thead>
+            <tbody class="text-center fs-6">
+              {% for x in bookings %} {% if x.booking.is_active %}
+              <tr>
+                <td class="fw-light">{{x.selected_mentor.Dom.Domain_name}}</td>
+                <td class="fw-light">
+                  {{x.selected_mentor.mentoruser.first_name}}
+                  {{x.selected_mentor.mentoruser.last_name}}
+                </td>
+                <td class="fw-light">{{x.booked_date}}</td>
+                <td class="fw-light">{{x.selected_mentor.mentor_price}}</td>
+                <td class="fw-light">{{x.slot.booked_slot}}</td>
+                <td>
+                  <a href="{% url 'removebooking' x.id %}"
+                    ><button
+                      type="submit"
+                      class="btn btn-white btn-sm border btn-block fw-light"
+                    >
+                      Remove
+                    </button></a
+                  >
+                </td>
+              </tr>
+              {% endif %} {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="border mt-3 mb-3" style="border-radius: 1rem">
+        <table class="table table-sm table-hover table-light mt-4 mb-3">
+          <tbody class="text-center fs-6">
+            <tr>
+              <td class="fw-light">Total: {{sum}}</td>
+            </tr>
+            <tr>
+              <td class="fw-light">Tax:{{tax}}</td>
+            </tr>
+            <tr>
+              <td class="fw-light">Pay:{{total}}</td>
+            </tr>
+            <tr>
+              <td>
+                <button
+                  type="submit"
+                  class="btn btn-white btn-sm btn-block fw-light"
+                >
+                  {% if response %}
+                  <form action="{% url 'booking_success' book_id %}" method="POST">
+                    <script
+                      src="https://checkout.razorpay.com/v1/checkout.js"
+                      data-key="{{RAZOR_KEY_ID}}"
+                      data-amount="{{response.amount}}"
+                      data-currency="{{response.currency}}"
+                      data-order_id="{{response.id}}"
+                      data-buttontext="Pay"
+                      data-name="hireyourmentor.com"
+                      data-description=""
+                      data-image=""
+                      data-prefill.name="{{request.user.username}}"
+                      data-prefill.email="{{request.user.email}}"
+                      data-theme.color="#F37254"
+                    ></script>
+                    <input
+                      type="hidden"
+                      custom="Hidden Element"
+                      name="hidden"
+                    />
+                  </form>
+                  {% endif %}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<footer class="footer bg-dark text-white ">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center font-monospace">
+        <h2 class="footer-heading mt-3">Hireyourmentor.com</h2>
+        <p class="menu mt-3">
+          <a
+            class="text-white"
+            style="text-decoration: none"
+            href="{% url 'userhome' %}"
+            >Home</a
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+          <a
+            class="text-white"
+            style="text-decoration: none"
+            href="{% url 'userlogin' %}"
+            >Login</a
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+          <a
+            class="text-white"
+            style="text-decoration: none"
+            href="{% url 'usersignup' %}"
+            >Sign up</a
+          >&nbsp;&nbsp;&nbsp;&nbsp;
+          <a
+            class="text-white"
+            style="text-decoration: none"
+            href="{% url 'mentorlogin' %}"
+            >Mentor</a
+          >
+        </p>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-12 text-center mb-2">
+        <h6 class="fw-light text-secondary">
+          Copyright ©2022 All rights reserved by hireyourmentor.com
+        </h6>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}

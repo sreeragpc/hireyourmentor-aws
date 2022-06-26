@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+<style>
+  body {
+    font-family:monospace ;
+  }
+  </style>
+  <link href="https://fonts.cdnfonts.com/css/bukhari-script" rel="stylesheet">
+<nav class="navbar navbar-expand-lg navbar-light " style="background: #90CAF9;" >
+  <a class="navbar-brand text-white ms-3 fs-3 "  style="font-family:Bukhari Script" href="{% url 'userhome' %}">HireYourMentor.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item ">
+        <a class="nav-link " href="{% url 'bookingpage' %}">Cart</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link " href="{% url 'userlogout' %}">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-11  border mt-3 mb-3"  style="border-radius: 1rem;">
+      <h6 class=" text-center mt-2 " >Student Dashboard</h6> 
+    </div>
+  </div>
+</div>      
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-3   "  >
+      <div class=" border mt-3 mb-3"    style="border-radius: 1rem;">
+        <a class="text-dark text-decoration-none" href={% url 'userdash' %} ><h6 class="border text-center m-3 mt-4 text-secondary "  style="border-radius: 1rem;" >Profile</h6></a>
+        <a class="text-dark text-decoration-none" href={% url 'useredit' %} ><h6 class="border text-center m-3  "  style="border-radius: 1rem;" >Edit details </h6></a>
+        <a class="text-dark text-decoration-none" href={% url 'userbooking' %} ><h6 class="border text-center m-3 text-secondary"  style="border-radius: 1rem;" >Bookings</h6></a>      
+        <a class="text-dark text-decoration-none" href={% url 'userpassword' %} ><h6 class="border text-center m-3 mb-4 text-secondary"  style="border-radius: 1rem;" >Change Password </h6></a>
+      </div>
+    </div>
+    <div class="col-md-8  border text-dark ms-2 mt-3 mb-3" style="border-radius: 1rem;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12 mt-1   "  >
+            <form method="post" >
+              {% csrf_token %}
+            <div class="form-outline m-2">
+              <input  type="text" name="first_name" class="form-control form-control-sm" value="{{user.first_name}}"  required />
+            </div>
+            <div class="form-outline m-2">
+              <input  type="text" name="last_name" class="form-control form-control-sm" value="{{user.last_name}}" required />
+            </div>
+            <div class="form-outline m-2">
+              <input  type="email" name="email" class="form-control form-control-sm" value="{{user.email}}" required />
+            </div>
+            <div class="form-outline m-2">
+              <input  type="text" name="city" class="form-control form-control-sm" value="{{user.city}}" required />
+            </div>
+          </div>
+        </div>
+      </div>       
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12  "  >
+            <button type="submit" class="btn btn-white  btn-sm border btn-block m-2 float-end ">Submit</button>
+        </form> 
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div> 
+<br>
+<br>
+<br>
+<br>
+<footer class="footer bg-dark text-white ">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center font-monospace">
+        <h2 class="footer-heading mt-3">Hireyourmentor.com</h2>
+        <p class="menu mt-3">
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userhome' %}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userlogin' %}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'usersignup' %}">Sign up</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'mentorlogin' %}">Mentor </a>
+        </p>
+      </div>
+    </div>
+    <div class="row mt-3  ">
+      <div class="col-md-12 text-center mb-2">
+        <h6 class="fw-light text-secondary">Copyright ©2022 All rights reserved  by hireyourmentor.com
+        </h6>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}

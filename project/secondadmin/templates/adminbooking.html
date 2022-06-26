@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block content%}
+<style>
+  body {
+    font-family:monospace ;
+  }
+  </style>
+  <link href="https://fonts.cdnfonts.com/css/bukhari-script" rel="stylesheet">
+<nav class="navbar navbar-expand-lg navbar-light " style="background: #90CAF9;" >
+  <a class="navbar-brand text-white ms-3 fs-3"  style="font-family:Bukhari Script" href="#">HireYourMentor.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item ">
+        <a class="nav-link " href="{% url 'adminlogout' %}">Log out</a>
+      </li>
+    </ul> 
+  </div>
+</nav>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-11  border mt-3 mb-1"  style="border-radius: 1rem;">
+      <h6 class=" text-center mt-2 " >Admin Dashboard</h6> 
+    </div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-11  border mb-2 mt-2 "  style="border-radius: 1rem;">
+          <div class="row  mt-2 mb-2">
+            <div class="col-md-4 ">
+              <a class="text-dark text-decoration-none" href={% url 'adminhome'   %} ><button class="btn btn-white  btn-sm border btn-block float-end  text-secondary">Students</button></a>              
+            </div>
+            <div class="col-md-4 text-center">
+              <a class="text-dark text-decoration-none" href={% url 'adminmentor'   %} ><button class="btn btn-white  btn-sm border btn-block  text-secondary ">Mentors</button></a>       
+            </div>
+            <div class="col-md-4 ">
+              <a class="text-dark text-decoration-none" href={% url 'adminbooking'   %} ><button  class="btn btn-white  btn-sm border btn-block float-start ">Booking</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10  border text-dark ms-2 mt-3 mb-3" style="border-radius: 1rem;">
+      <div class="container">
+        <div class="row justify-content-center mt-3">
+          <div class="col-md-12  mt-2 "  >
+        </div>
+     </div>
+     <div class="row justify-content-center">
+       <div class="col-md-9" >
+        <table class="table table-sm table-hover  table-light mt-4 mb-3"  id="adminbooking">
+            <thead class=" text-muted fs-6  text-center  " >
+              <tr >
+                <th class="fw-light  " >Student</th>
+                <th class="fw-light ">Subject</th>
+                <th class="fw-light ">Mentor</th>
+                <th class="fw-light ">Date</th>
+                <th class="fw-light ">Time</th>
+                <th class="fw-light ">status</th>
+              </tr>
+            </thead>
+            <tbody class="text-start fs-6">
+              {% for x in bookings %}
+              <tr>
+                <td class="fw-light ">{{x.booking.user.first_name}} {{x.booking.user.last_name}}</td>
+                <td class="fw-light ">{{x.selected_mentor.Dom.Domain_name}}</td>
+                <td class="fw-light ">{{x.selected_mentor.mentoruser.first_name}} {{x.selected_mentor.mentoruser.last_name}} </td>
+                <td class="fw-light ">{{x.booked_date}}</td>
+                <td class="fw-light ">{{x.slot.booked_slot}}</td>
+                {% if x.booked_date < today %}
+                <td ><button class="btn btn-white  btn-sm border btn-block  fw-light ">Expired</button></td>
+               {% else %}
+               <td ><button class="btn btn-white  btn-sm border btn-block  fw-light btn-secondary">Upcoming</button></td>
+                {% endif %}
+              </tr>
+              {% endfor %} 
+            </tbody>
+          </table>
+        </div>
+          <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+          <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+              <script>
+                $(document).ready( function () {
+                  $('#adminbooking').DataTable({
+                    scrollX: true,
+                  });
+              } );
+          </script>
+    </div>
+</div>
+  </div>
+</div> 
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<footer class="footer bg-dark text-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center font-monospace">
+        <h2 class="footer-heading mt-3">Hireyourmentor.com</h2>
+        <p class="menu mt-3">
+          <a class=" text-white" style="text-decoration: none" href="{% url 'adminhome' %}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'adminlogin' %}">login</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'userlogin' %}">Student </a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class=" text-white" style="text-decoration: none" href="{% url 'mentorlogin' %}">Mentor </a>
+        </p>
+      </div>
+    </div>
+    <div class="row mt-3  ">
+      <div class="col-md-12 text-center mb-2">
+        <h6 class="fw-light text-secondary">Copyright ©2022 All rights reserved  by hireyourmentor.com
+        </h6>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}
