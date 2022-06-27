@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['hireyourmentor.herokuapp.com', '127.0.0.1', '54.149.81.192','www.hireyourmentor.com','hireyourmentor.com']
+ALLOWED_HOSTS = ['127.0.0.1', '54.149.81.192','www.hireyourmentor.com','hireyourmentor.com']
 
 
 INSTALLED_APPS = [
@@ -84,8 +84,6 @@ DATABASES = {
 
 }
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
 
 
 AUTH_PASSWORD_VALIDATORS = [
