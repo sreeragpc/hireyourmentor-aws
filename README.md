@@ -45,5 +45,5 @@ Email and password will be shared on request
 
 ## Screenshots
 
-![App Screenshot](https://ibb.co/SK9sFTJ)
+![App Screenshot](https://imgur.com/th9xENH)
 
