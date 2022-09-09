@@ -43,7 +43,10 @@ Email and password will be shared on request
 4. Mentor verification
 5. Search and sort functions to all lists are added
 
-## Screenshots
+## Screenshot
 
-![App Screenshot](https://imgur.com/th9xENH)
+![App Screenshot](https://github.com/SREERAGPC/hireyourmentor-aws/blob/main/screenshots/Screenshot_1.jpg?raw=true)
 
+
+## Website tour
+Youtube link : https://youtu.be/Optj-fWK1Fk
